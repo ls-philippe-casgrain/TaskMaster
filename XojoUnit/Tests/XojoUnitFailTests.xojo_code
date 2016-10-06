@@ -586,8 +586,8 @@ Inherits TestGroup
 
 	#tag Method, Flags = &h0
 		Sub WillTrulyFailTest()
-		  Assert.Fail("Yup it failed", "We expect this to fail")
-		  Assert.AreEqual(3, 4, "Another test that should fail")
+		  //Assert.Fail("Yup it failed", "We expect this to fail")
+		  //Assert.AreEqual(3, 4, "Another test that should fail")
 		End Sub
 	#tag EndMethod
 
