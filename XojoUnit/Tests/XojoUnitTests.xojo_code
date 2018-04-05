@@ -1,6 +1,6 @@
 #tag Class
 Protected Class XojoUnitTests
-Inherits TestGroup
+Inherits XojoUnitSuperClassTests
 	#tag Event
 		Sub Setup()
 		  Prop2 = Prop2 + 1
@@ -53,7 +53,7 @@ Inherits TestGroup
 		  Assert.AreDifferent(s1, s2)
 		  
 		  s1 = s2
-		  s1 = s1.DefineEncoding(nil)
+		  s1 = s1.DefineEncoding(Nil)
 		  Assert.AreDifferent(s1, s2)
 		  
 		End Sub
@@ -84,6 +84,11 @@ Inherits TestGroup
 		  Dim c2 As Currency = 40.00 + 2.38
 		  
 		  Assert.AreEqual(c1, c2)
+		  
+		  c1 = 1.02
+		  c2 = 1.99
+		  
+		  Assert.AreNotEqual(c1, c2)
 		End Sub
 	#tag EndMethod
 
@@ -427,6 +432,20 @@ Inherits TestGroup
 		End Sub
 	#tag EndMethod
 
+	#tag Method, Flags = &h0, CompatibilityFlags = (TargetConsole and (Target32Bit or Target64Bit)) or  (TargetWeb and (Target32Bit or Target64Bit)) or  (TargetDesktop and (Target32Bit or Target64Bit))
+		Sub DoesNotMatchStringTest()
+		  Dim actual As String = "abcde"
+		  Dim pattern As String = "^\d+$"
+		  
+		  Assert.DoesNotMatch(pattern, actual)
+		  
+		  actual = "abcd"
+		  pattern = "^(?-i)[A-Z]+$"
+		  
+		  Assert.DoesNotMatch(pattern, actual)
+		End Sub
+	#tag EndMethod
+
 	#tag Method, Flags = &h0
 		Sub IsFalseTest()
 		  Assert.IsFalse(False)
@@ -455,6 +474,37 @@ Inherits TestGroup
 		End Sub
 	#tag EndMethod
 
+	#tag Method, Flags = &h0, CompatibilityFlags = (TargetConsole and (Target32Bit or Target64Bit)) or  (TargetWeb and (Target32Bit or Target64Bit)) or  (TargetDesktop and (Target32Bit or Target64Bit))
+		Sub MatchesStringTest()
+		  Dim actual As String = "12345"
+		  Dim pattern As String = "^\d+$"
+		  
+		  Assert.Matches(pattern, actual)
+		  
+		  actual = "abcd"
+		  pattern = "^[A-Z]+$"
+		  
+		  Assert.Matches(pattern, actual)
+		End Sub
+	#tag EndMethod
+
+	#tag Method, Flags = &h0
+		Sub NotImplementedTest()
+		  // Tests will only return a result if one of the Assert methods
+		  // are called. This test intentionally does nothing useful to 
+		  // simulate those times when a developer forgets to do this.
+		  //
+		  // It should report as "not implemented".
+		  //
+		End Sub
+	#tag EndMethod
+
+	#tag Method, Flags = &h0
+		Sub OverriddenMethodTest()
+		  Assert.Pass "This subclass method executed as intended"
+		End Sub
+	#tag EndMethod
+
 	#tag Method, Flags = &h0
 		Sub PassTest()
 		  Assert.Pass("Passed!")
@@ -471,6 +521,55 @@ Inherits TestGroup
 	#tag Method, Flags = &h0
 		Sub Setup2Test()
 		  Assert.AreEqual(1, Prop2)
+		  
+		End Sub
+	#tag EndMethod
+
+	#tag Method, Flags = &h0
+		Sub TestMethodWithParamTest(param As Text)
+		  #Pragma Unused param
+		  
+		  Assert.Fail "A test method with a param should have been ignored"
+		End Sub
+	#tag EndMethod
+
+	#tag Method, Flags = &h0
+		Sub TestTimersTest()
+		  //
+		  // Demonstrates the use of Test Timers
+		  // 
+		  
+		  StartTestTimer // key is optional
+		  StartTestTimer("Part1")
+		  StartTestTimer("Part2")
+		  StartTestTimer("Part3")
+		  StartTestTimer("Unused")
+		  
+		  Dim target As Double = Microseconds + 250000.0
+		  While Microseconds < target
+		    //
+		    // Wait
+		    //
+		  Wend
+		  
+		  LogTestTimer("Part1", "initial")
+		  LogTestTimer("Part3", "before reset")
+		  StartTestTimer("Part3") // A Test Timer can be restarted at any time, even if not logged
+		  
+		  target = Microseconds + 500.0
+		  While Microseconds < target
+		    //
+		    // Wait
+		    //
+		  Wend
+		  
+		  LogTestTimer("Part1", "done") // Reusing this as a way to creating a lap
+		  LogTestTimer("Part2")
+		  LogTestTimer("Part3", "after reset")
+		  
+		  //
+		  // Timer "Unused" is never logged, and that's ok
+		  //
 		  
 		End Sub
 	#tag EndMethod
@@ -564,6 +663,11 @@ Inherits TestGroup
 			Name="SkippedTestCount"
 			Group="Behavior"
 			Type="Integer"
+		#tag EndViewProperty
+		#tag ViewProperty
+			Name="StopTestOnFail"
+			Group="Behavior"
+			Type="Boolean"
 		#tag EndViewProperty
 		#tag ViewProperty
 			Name="Super"

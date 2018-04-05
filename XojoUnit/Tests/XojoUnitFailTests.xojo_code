@@ -7,6 +7,14 @@ Inherits TestGroup
 		    PassIfFailed
 		  End If
 		  
+		  StopTestOnFail = True
+		  //
+		  // Why is this here?
+		  // Because this property, when set in the middle of a test
+		  // should not carry over to the next test.
+		  // If it does, all of the subsequent tests will truly
+		  // fail.
+		  //
 		End Sub
 	#tag EndEvent
 
@@ -32,7 +40,7 @@ Inherits TestGroup
 		  Assert.AreDifferent(s1, s2)
 		  IncrementFailCountIfFail
 		  
-		  s1 = s1.DefineEncoding(nil)
+		  s1 = s1.DefineEncoding(Nil)
 		  s2 = s1
 		  Assert.AreDifferent(s1, s2)
 		  IncrementFailCountIfFail
@@ -72,6 +80,12 @@ Inherits TestGroup
 		  Dim c2 As Currency = 40.00 + 2.30
 		  
 		  Assert.AreEqual(c1, c2)
+		  IncrementFailCountIfFail
+		  
+		  c1 = 1.02
+		  c2 = 1.02
+		  
+		  Assert.AreNotEqual(c1, c2)
 		  IncrementFailCountIfFail
 		  
 		  PassIfFailed
@@ -500,6 +514,24 @@ Inherits TestGroup
 		End Sub
 	#tag EndMethod
 
+	#tag Method, Flags = &h0, CompatibilityFlags = (TargetConsole and (Target32Bit or Target64Bit)) or  (TargetWeb and (Target32Bit or Target64Bit)) or  (TargetDesktop and (Target32Bit or Target64Bit))
+		Sub DoesNotMatchStringTest()
+		  Dim actual As String = "12345"
+		  Dim pattern As String = "^\d+$"
+		  
+		  Assert.DoesNotMatch(pattern, actual)
+		  IncrementFailCountIfFail
+		  
+		  actual = "abcd"
+		  pattern = "^[A-Z]+$"
+		  
+		  Assert.DoesNotMatch(pattern, actual)
+		  IncrementFailCountIfFail
+		  
+		  PassIfFailed
+		End Sub
+	#tag EndMethod
+
 	#tag Method, Flags = &h0
 		Sub FailTest()
 		  Assert.Fail("Failed!")
@@ -559,6 +591,24 @@ Inherits TestGroup
 		End Sub
 	#tag EndMethod
 
+	#tag Method, Flags = &h0, CompatibilityFlags = (TargetConsole and (Target32Bit or Target64Bit)) or  (TargetWeb and (Target32Bit or Target64Bit)) or  (TargetDesktop and (Target32Bit or Target64Bit))
+		Sub MatchesStringTest()
+		  Dim actual As String = "1234a"
+		  Dim pattern As String = "^\d+$"
+		  
+		  Assert.Matches(pattern, actual)
+		  IncrementFailCountIfFail
+		  
+		  actual = "abcd"
+		  pattern = "^(?-i)[A-Z]+$"
+		  
+		  Assert.Matches(pattern, actual)
+		  IncrementFailCountIfFail
+		  
+		  PassIfFailed
+		End Sub
+	#tag EndMethod
+
 	#tag Method, Flags = &h21
 		Private Sub PassIfFailed()
 		  If FailCount = ExpectedFailCount Then
@@ -586,8 +636,17 @@ Inherits TestGroup
 
 	#tag Method, Flags = &h0
 		Sub WillTrulyFailTest()
-		  //Assert.Fail("Yup it failed", "We expect this to fail")
-		  //Assert.AreEqual(3, 4, "Another test that should fail")
+		  Assert.Fail("Yup it failed", "We expect this to fail")
+		  
+		  StopTestOnFail = True
+		  
+		  Assert.AreEqual(3, 4, "Another test that should fail")
+		  
+		  //
+		  // StopTestOnFail should prevent us from ever getting to this point
+		  //
+		  Break
+		  Assert.Fail("This should not have happened, so StopTestOnFail did not work!")
 		End Sub
 	#tag EndMethod
 
@@ -666,6 +725,11 @@ Inherits TestGroup
 			Name="SkippedTestCount"
 			Group="Behavior"
 			Type="Integer"
+		#tag EndViewProperty
+		#tag ViewProperty
+			Name="StopTestOnFail"
+			Group="Behavior"
+			Type="Boolean"
 		#tag EndViewProperty
 		#tag ViewProperty
 			Name="Super"
