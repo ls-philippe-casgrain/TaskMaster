@@ -62,6 +62,7 @@ Begin Window ToDoWindow
       ScrollbarHorizontal=   False
       ScrollBarVertical=   True
       SelectionType   =   0
+      ShowDropIndicator=   False
       TabIndex        =   0
       TabPanelIndex   =   0
       TabStop         =   True
@@ -215,6 +216,13 @@ End
 #tag EndWindow
 
 #tag WindowCode
+	#tag Event
+		Sub Open()
+		  Self.ResizeControlsForLinux
+		End Sub
+	#tag EndEvent
+
+
 #tag EndWindowCode
 
 #tag Events TaskListBox
