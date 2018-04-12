@@ -20,6 +20,7 @@ Class=TestController;XojoUnit/TestFramework/TestController.xojo_code;&h000000007
 Class=TestResult;XojoUnit/TestFramework/TestResult.xojo_code;&h00000000647137FF;&h000000005AEBE7FF;false
 Toolbar=XojoUnitTestToolbar;XojoUnit/XojoUnitTestToolbar.xojo_toolbar;&h0000000009E107FF;&h000000000C0417FF;false
 Class=TaskItem;TaskItem.xojo_code;&h0000000013A87FFF;&h0000000000000000;false
+Class=TaskItemTests;TaskItemTests.xojo_code;&h00000000549C7FFF;&h0000000000000000;false
 DefaultWindow=ToDoWindow
 AppMenuBar=MainMenuBar
 MajorVersion=1
