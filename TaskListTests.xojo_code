@@ -1,39 +1,71 @@
 #tag Class
-Protected Class DesktopTestController
-Inherits TestController
-	#tag Event
-		Sub InitializeTestGroups()
-		  // Instantiate TestGroup subclasses here so that they can be run
+Protected Class TaskListTests
+Inherits TestGroup
+	#tag Method, Flags = &h0
+		Sub AddTest()
+		  Dim tl as TaskList = new TaskList
 		  
-		  Dim group As TestGroup
+		  Dim ti as TaskItem = new TaskItem
+		  ti.title = "Hello, world!"
 		  
-		  group = New TaskItemTests(Self, "TaskItem tests")
-		  group = New TaskListTests(Self, "TaskList tests")
+		  tl.AddTask(ti)
+		  
+		  dim r As TaskItem = tl.tasks(0)
+		  
+		  Assert.AreEqual(r.title, ti.title)
+		End Sub
+	#tag EndMethod
+
+	#tag Method, Flags = &h0
+		Sub DeleteTest()
+		  Dim tl as TaskList = new TaskList
+		  
+		  Dim t1 as TaskItem = new TaskItem
+		  t1.title = "The quick brown fox"
+		  
+		  Dim t2 as TaskItem = new TaskItem
+		  t2.title = "jumped over"
+		  
+		  Dim t3 as TaskItem = new TaskItem
+		  t3.title = "the lazy dog"
+		  
+		  tl.AddTask(t1)
+		  tl.AddTask(t2)
+		  tl.AddTask(t3)
+		  
+		  dim r As TaskItem = tl.tasks(0)
+		  Assert.AreEqual(r.title, "The quick brown fox")
+		  
+		  tl.DeleteTask(0)
+		  
+		  r = tl.tasks(0)
+		  Assert.AreEqual(r.title, "jumped over")
+		  
+		  tl.DeleteTask(2)
+		  
+		  r = tl.tasks(0)
+		  Assert.AreEqual(r.title, "jumped over")
 		  
 		End Sub
-	#tag EndEvent
+	#tag EndMethod
 
 
 	#tag ViewBehavior
-		#tag ViewProperty
-			Name="AllTestCount"
-			Group="Behavior"
-			Type="Integer"
-		#tag EndViewProperty
 		#tag ViewProperty
 			Name="Duration"
 			Group="Behavior"
 			Type="Double"
 		#tag EndViewProperty
 		#tag ViewProperty
-			Name="FailedCount"
+			Name="FailedTestCount"
 			Group="Behavior"
 			Type="Integer"
 		#tag EndViewProperty
 		#tag ViewProperty
-			Name="GroupCount"
+			Name="IncludeGroup"
 			Group="Behavior"
-			Type="Integer"
+			InitialValue="True"
+			Type="Boolean"
 		#tag EndViewProperty
 		#tag ViewProperty
 			Name="Index"
@@ -66,12 +98,7 @@ Inherits TestController
 			Type="Integer"
 		#tag EndViewProperty
 		#tag ViewProperty
-			Name="PassedCount"
-			Group="Behavior"
-			Type="Integer"
-		#tag EndViewProperty
-		#tag ViewProperty
-			Name="RunGroupCount"
+			Name="PassedTestCount"
 			Group="Behavior"
 			Type="Integer"
 		#tag EndViewProperty
@@ -81,15 +108,25 @@ Inherits TestController
 			Type="Integer"
 		#tag EndViewProperty
 		#tag ViewProperty
-			Name="SkippedCount"
+			Name="SkippedTestCount"
 			Group="Behavior"
 			Type="Integer"
+		#tag EndViewProperty
+		#tag ViewProperty
+			Name="StopTestOnFail"
+			Group="Behavior"
+			Type="Boolean"
 		#tag EndViewProperty
 		#tag ViewProperty
 			Name="Super"
 			Visible=true
 			Group="ID"
 			Type="String"
+		#tag EndViewProperty
+		#tag ViewProperty
+			Name="TestCount"
+			Group="Behavior"
+			Type="Integer"
 		#tag EndViewProperty
 		#tag ViewProperty
 			Name="Top"
