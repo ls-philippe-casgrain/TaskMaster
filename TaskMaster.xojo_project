@@ -6,6 +6,7 @@ Window=ToDoWindow;ToDoWindow.xojo_window;&h000000003A101B77;&h0000000000000000;f
 MenuBar=MainMenuBar;MainMenuBar.xojo_menu;&h000000007E678E6C;&h0000000000000000;false
 Folder=XojoUnit;XojoUnit;&h000000000C0417FF;&h0000000000000000;false
 Module=Extensions;Extensions.xojo_code;&h000000003784F7FF;&h0000000000000000;false
+Interface=TaskListInterface;TaskListInterface.xojo_code;&h00000000711C37FF;&h0000000000000000;false
 BuildSteps=Build Automation;Build Automation.xojo_code;&h0000000040B7D6EF;&h0000000000000000;false
 Class=DesktopTestController;XojoUnit/DesktopTestController.xojo_code;&h00000000412807FF;&h000000000C0417FF;false
 MenuBar=XojoUnitMenuBar;XojoUnit/XojoUnitMenuBar.xojo_menu;&h000000005690CFFF;&h000000000C0417FF;false

@@ -1,40 +1,28 @@
-#tag Class
-Protected Class TaskController
+#tag Interface
+Protected Interface TaskListInterface
 	#tag Method, Flags = &h0
-		Sub Add(title as String)
-		  if (self.listView <> nil) then
-		     self.listView.AddRow("", title)
-		  end if
-		  dim ti as TaskItem = new TaskItem
-		  ti.title = title
-		  self.listModel.AddTask(ti)
+		Sub AddTask(task as TaskItem)
+		  
 		End Sub
 	#tag EndMethod
 
 	#tag Method, Flags = &h0
-		Sub Constructor(view As Listbox)
-		  self.listModel = new TaskList
-		  self.listView = view
+		Sub CompleteTask(taskIndex As Integer)
+		  
 		End Sub
 	#tag EndMethod
 
 	#tag Method, Flags = &h0
-		Sub Remove(taskIndex As Integer)
-		  if (self.listView <> nil) then
-		    self.listView.RemoveRow(taskIndex)
-		  end if
-		  self.listModel.DeleteTask(taskIndex)
+		Sub DeleteTask(taskIndex As Integer)
+		  
 		End Sub
 	#tag EndMethod
 
-
-	#tag Property, Flags = &h0
-		listModel As TaskListInterface
-	#tag EndProperty
-
-	#tag Property, Flags = &h0
-		listView As ListBox
-	#tag EndProperty
+	#tag Method, Flags = &h0
+		Sub UncompleteTask(taskIndex As Integer)
+		  
+		End Sub
+	#tag EndMethod
 
 
 	#tag ViewBehavior
@@ -50,11 +38,6 @@ Protected Class TaskController
 			Visible=true
 			Group="Position"
 			InitialValue="0"
-			Type="Integer"
-		#tag EndViewProperty
-		#tag ViewProperty
-			Name="listModel"
-			Group="Behavior"
 			Type="Integer"
 		#tag EndViewProperty
 		#tag ViewProperty
@@ -77,5 +60,5 @@ Protected Class TaskController
 			Type="Integer"
 		#tag EndViewProperty
 	#tag EndViewBehavior
-End Class
-#tag EndClass
+End Interface
+#tag EndInterface

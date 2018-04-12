@@ -1,5 +1,6 @@
 #tag Class
 Protected Class TaskList
+Implements TaskListInterface
 	#tag Method, Flags = &h0
 		Sub AddTask(task as TaskItem)
 		  self.tasks.Append(task)
