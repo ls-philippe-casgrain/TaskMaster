@@ -7,8 +7,7 @@ Inherits TestController
 		  
 		  Dim group As TestGroup
 		  
-		  group = New XojoUnitTests(Self, "Assertion")
-		  group = New XojoUnitFailTests(Self, "Always Fail")
+		  //group = New XojoUnitTests(Self, "Assertion")
 		  
 		End Sub
 	#tag EndEvent
