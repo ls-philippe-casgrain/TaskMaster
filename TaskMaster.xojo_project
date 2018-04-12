@@ -23,6 +23,7 @@ Class=TaskItem;TaskItem.xojo_code;&h0000000013A87FFF;&h0000000000000000;false
 Class=TaskItemTests;TaskItemTests.xojo_code;&h00000000549C7FFF;&h0000000000000000;false
 Class=TaskList;TaskList.xojo_code;&h0000000075453FFF;&h0000000000000000;false
 Class=TaskListTests;TaskListTests.xojo_code;&h000000005BD267FF;&h0000000000000000;false
+Class=TaskController;TaskController.xojo_code;&h000000005D6DBFFF;&h0000000000000000;false
 DefaultWindow=ToDoWindow
 AppMenuBar=MainMenuBar
 MajorVersion=1
