@@ -1,40 +1,40 @@
 #tag Class
-Protected Class DesktopTestController
-Inherits TestController
-	#tag Event
-		Sub InitializeTestGroups()
-		  // Instantiate TestGroup subclasses here so that they can be run
+Protected Class TaskControllerTests
+Inherits TestGroup
+	#tag Method, Flags = &h0
+		Sub AddTest()
+		  dim tc as TaskController = new TaskController(nil)
 		  
-		  Dim group As TestGroup
+		  dim mockTL as MockTaskList = new MockTaskList
 		  
-		  group = New TaskItemTests(Self, "TaskItem tests")
-		  group = New TaskListTests(Self, "TaskList tests")
-		  group = New TaskControllerTests(Self, "TaskController tests")
+		  tc.listModel = mockTL
+		  
+		  Assert.AreEqual(mockTL.addCount, 0)
+		  
+		  tc.Add("Hello, world!")
+		  
+		  Assert.AreEqual(mockTL.addCount, 1)
 		  
 		End Sub
-	#tag EndEvent
+	#tag EndMethod
 
 
 	#tag ViewBehavior
-		#tag ViewProperty
-			Name="AllTestCount"
-			Group="Behavior"
-			Type="Integer"
-		#tag EndViewProperty
 		#tag ViewProperty
 			Name="Duration"
 			Group="Behavior"
 			Type="Double"
 		#tag EndViewProperty
 		#tag ViewProperty
-			Name="FailedCount"
+			Name="FailedTestCount"
 			Group="Behavior"
 			Type="Integer"
 		#tag EndViewProperty
 		#tag ViewProperty
-			Name="GroupCount"
+			Name="IncludeGroup"
 			Group="Behavior"
-			Type="Integer"
+			InitialValue="True"
+			Type="Boolean"
 		#tag EndViewProperty
 		#tag ViewProperty
 			Name="Index"
@@ -67,12 +67,7 @@ Inherits TestController
 			Type="Integer"
 		#tag EndViewProperty
 		#tag ViewProperty
-			Name="PassedCount"
-			Group="Behavior"
-			Type="Integer"
-		#tag EndViewProperty
-		#tag ViewProperty
-			Name="RunGroupCount"
+			Name="PassedTestCount"
 			Group="Behavior"
 			Type="Integer"
 		#tag EndViewProperty
@@ -82,15 +77,25 @@ Inherits TestController
 			Type="Integer"
 		#tag EndViewProperty
 		#tag ViewProperty
-			Name="SkippedCount"
+			Name="SkippedTestCount"
 			Group="Behavior"
 			Type="Integer"
+		#tag EndViewProperty
+		#tag ViewProperty
+			Name="StopTestOnFail"
+			Group="Behavior"
+			Type="Boolean"
 		#tag EndViewProperty
 		#tag ViewProperty
 			Name="Super"
 			Visible=true
 			Group="ID"
 			Type="String"
+		#tag EndViewProperty
+		#tag ViewProperty
+			Name="TestCount"
+			Group="Behavior"
+			Type="Integer"
 		#tag EndViewProperty
 		#tag ViewProperty
 			Name="Top"
