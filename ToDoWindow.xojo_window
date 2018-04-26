@@ -228,6 +228,21 @@ End
 	#tag EndEvent
 
 
+	#tag Method, Flags = &h0
+		Sub Constructor()
+		  // Calling the overridden superclass constructor.
+		  Super.Constructor
+		  
+		  self.controller = new TaskController(self.TaskListBox)
+		End Sub
+	#tag EndMethod
+
+
+	#tag Property, Flags = &h0
+		controller As TaskController
+	#tag EndProperty
+
+
 #tag EndWindowCode
 
 #tag Events TaskListBox
@@ -278,16 +293,16 @@ End
 #tag Events DeleteButton
 	#tag Event
 		Sub Action()
-		  If TaskListBox.ListIndex >= 0 Then
-		    TaskListBox.RemoveRow(TaskListBox.ListIndex)
-		  End If
+		  self.controller.Remove(TaskListBox.ListIndex)
+		  
 		End Sub
 	#tag EndEvent
 #tag EndEvents
 #tag Events AddButton
 	#tag Event
 		Sub Action()
-		  TaskListBox.AddRow("", TaskField.Text)
+		  self.controller.Add(TaskField.Text)
+		  
 		End Sub
 	#tag EndEvent
 #tag EndEvents

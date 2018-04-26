@@ -1,15 +1,20 @@
 #tag Class
-Protected Class XojoUnitSuperClassTests
+Protected Class TaskControllerTests
 Inherits TestGroup
 	#tag Method, Flags = &h0
-		Sub OverriddenMethodTest()
-		  Assert.Fail "This superclass method should have been ignored"
-		End Sub
-	#tag EndMethod
-
-	#tag Method, Flags = &h0
-		Sub SuperClassMethodTest()
-		  Assert.Pass "This superclass method executed as intended"
+		Sub AddTest()
+		  dim tc as TaskController = new TaskController(nil)
+		  
+		  dim mockTL as MockTaskList = new MockTaskList
+		  
+		  tc.listModel = mockTL
+		  
+		  Assert.AreEqual(mockTL.addCount, 0)
+		  
+		  tc.Add("Hello, world!")
+		  
+		  Assert.AreEqual(mockTL.addCount, 1)
+		  
 		End Sub
 	#tag EndMethod
 
@@ -75,6 +80,11 @@ Inherits TestGroup
 			Name="SkippedTestCount"
 			Group="Behavior"
 			Type="Integer"
+		#tag EndViewProperty
+		#tag ViewProperty
+			Name="StopTestOnFail"
+			Group="Behavior"
+			Type="Boolean"
 		#tag EndViewProperty
 		#tag ViewProperty
 			Name="Super"
